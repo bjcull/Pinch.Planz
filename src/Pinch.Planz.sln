@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pinch.Planz", "Pinch.Planz\Pinch.Planz.csproj", "{CDB8ABFD-EE20-4467-9698-CB78BC7B9CDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinch.Planz.Tests", "Pinch.Planz.Tests\Pinch.Planz.Tests.csproj", "{B8B9A52F-6098-440A-8DEC-B60DCE9F017E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDB8ABFD-EE20-4467-9698-CB78BC7B9CDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDB8ABFD-EE20-4467-9698-CB78BC7B9CDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDB8ABFD-EE20-4467-9698-CB78BC7B9CDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDB8ABFD-EE20-4467-9698-CB78BC7B9CDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B9A52F-6098-440A-8DEC-B60DCE9F017E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B9A52F-6098-440A-8DEC-B60DCE9F017E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B9A52F-6098-440A-8DEC-B60DCE9F017E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B9A52F-6098-440A-8DEC-B60DCE9F017E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C27AF87-4FFA-4103-8C1B-D3EC192BF860}
+	EndGlobalSection
+EndGlobal
