@@ -22,6 +22,13 @@ namespace Pinch.Planz.Evaluation
                     return new PaymentResult(monetaryValue.Value, monetaryValue.CurrencySymbol, CurrentDate());
                 case MagnitudeValue magnitude:
                     return new MagnitudeResult(magnitude.Magnitude);
+                case TrialValue trial:
+                    return new TrialResult(new DurationResult(trial.Duration.Value, trial.Duration.Magnitude), CurrentDate());
+                    //return new PaymentResult(0, "", CurrentDate())
+                    //{
+                    //    IsTrial = true,
+                    //    Period = trial.Duration.Magnitude                        
+                    //};
                 case BinaryExpression binary:
                     return DispatchOperator(Evaluate(binary.Left), Evaluate(binary.Right), binary.Operator);
                 default:
@@ -78,28 +85,49 @@ namespace Pinch.Planz.Evaluation
             if (left is DurationResult d8 && right is PlanResult pr8)
                 return AddPlanAndDuration(pr8, d8);
 
+            if (left is TrialResult t9 && right is PaymentResult pr9)
+            {
+                var trialPayment = new PaymentResult(t9);
+                pr9.PaymentDate = pr9.PaymentDate.AddDuration(t9.DurationResult.Value, t9.DurationResult.Magnitude);
+                return new PlanResult(trialPayment, pr9);
+            }
+            
+            if (left is PaymentResult pl10 && right is TrialResult t10)
+            {
+                var trialPayment = new PaymentResult(t10);
+                pl10 = AddPaymentAndDuration(t10.DurationResult, pl10);
+                return new PlanResult(trialPayment, pl10);
+            }
+            
+            if (left is TrialResult t11 && right is PlanResult pr11)
+            {
+                var trialPayment = new PaymentResult(t11);
+                pr11 = AddPlanAndDuration(pr11, t11.DurationResult);
+                pr11.Payments.Add(trialPayment);
+                return pr11;
+            }
+
+            if (left is PlanResult pr12 && right is TrialResult t12)
+            {
+                var trialPayment = new PaymentResult(t12);
+                pr12 = AddPlanAndDuration(pr12, t12.DurationResult);
+                pr12.Payments.Add(trialPayment);
+                return pr12;
+            }
+
             throw new EvaluationException($"Values {left} and {right} cannot be added.");
         }
 
-        private static Result AddPlanAndDuration(PlanResult planResult, DurationResult durationResult)
+        private static PlanResult AddPlanAndDuration(PlanResult planResult, DurationResult durationResult)
         {
             planResult.Payments.ForEach(x =>
-            {
-                for (var i = 0; i < durationResult.Value; i++)
-                {
-                    x.PaymentDate = x.PaymentDate.Plus(durationResult.Magnitude);
-                }
-            });
+                x.PaymentDate = x.PaymentDate.AddDuration(durationResult.Value, durationResult.Magnitude));
             return planResult;
         }
 
-        private static Result AddPaymentAndDuration(DurationResult durationResult, PaymentResult paymentResult)
+        private static PaymentResult AddPaymentAndDuration(DurationResult durationResult, PaymentResult paymentResult)
         {
-            for (var i = 0; i < durationResult.Value; i++)
-            {
-                paymentResult.PaymentDate = paymentResult.PaymentDate.Plus(durationResult.Magnitude);
-            }
-
+            paymentResult.PaymentDate = paymentResult.PaymentDate.AddDuration(durationResult.Value, durationResult.Magnitude);
             return paymentResult;
         }
 

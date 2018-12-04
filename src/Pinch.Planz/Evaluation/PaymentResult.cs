@@ -25,6 +25,15 @@ namespace Pinch.Planz.Evaluation
             Period = Period.Zero;
         }
 
+        public PaymentResult(TrialResult trial)
+        {
+            Amount = 0;
+            CurrencySymbol = "";
+            IsTrial = true;
+            PaymentDate = trial.Date;
+            Period = Period.Zero;            
+        }
+
         public override string ToString()
         {
             if (IsTrial)

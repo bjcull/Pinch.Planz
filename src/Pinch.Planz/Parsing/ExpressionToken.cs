@@ -12,6 +12,9 @@ namespace Pinch.Planz.Parsing
 
         MonetaryAmount,
 
+        [Token(Example = "T")]
+        Trial,
+
         [Token(Example = "+")]
         Plus,
 

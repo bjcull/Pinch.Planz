@@ -23,6 +23,12 @@ namespace Pinch.Planz
                     try
                     {
                         var tokens = ExpressionTokenizer.TryTokenize(line);
+
+                        //foreach (var token in tokens.Value)
+                        //{
+                        //    Console.WriteLine(token);
+                        //}                        
+
                         if (!tokens.HasValue)
                         {
                             WriteSyntaxError(tokens.ToString(), tokens.ErrorPosition);

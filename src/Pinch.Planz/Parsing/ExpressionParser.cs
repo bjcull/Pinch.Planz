@@ -28,6 +28,11 @@ namespace Pinch.Planz.Parsing
                 .Apply(ExpressionTextParsers.MonetaryValue)
                 .Select(x => (Expression)x);
 
+        public static ExpressionTokenParser Trial { get; } =
+            Token.EqualTo(ExpressionToken.Trial)
+                .Apply(ExpressionTextParsers.Trial)
+                .Select(x => (Expression) x);
+
         public static TokenListParser<ExpressionToken, Operator> Op(ExpressionToken token, Operator op) => 
             Token.EqualTo(token)
                 .Value(op);
@@ -37,7 +42,7 @@ namespace Pinch.Planz.Parsing
         public static TokenListParser<ExpressionToken, Operator> Multiply { get; } = Op(ExpressionToken.Asterisk, Operator.Multiply);
         public static TokenListParser<ExpressionToken, Operator> Divide { get; } = Op(ExpressionToken.Slash, Operator.Divide);
 
-        public static ExpressionTokenParser Literal { get; } = Duration.Or(Number).Or(MonetaryValue).Or(Magnitude);
+        public static ExpressionTokenParser Literal { get; } = Trial.Or(Duration).Or(Number).Or(MonetaryValue).Or(Magnitude);
 
         static ExpressionTokenParser Factor { get; } =
             (from lparen in Token.EqualTo(ExpressionToken.LParen)

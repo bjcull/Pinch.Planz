@@ -22,6 +22,10 @@ namespace Pinch.Planz.Parsing
             Numerics.IntegerInt32
                 .Then(d => Magnitude.Select(m => new DurationValue(d, m)));
 
+        public static TextParser<TrialValue> Trial { get; } =
+            Duration
+                .Then(d => Character.EqualTo('T').Value(new TrialValue(d)));
+
         public static TextParser<MonetaryValue> MonetaryValue { get; } =
             ExpressionTokenizer.MonetaryValue()
                 .Select((input) =>

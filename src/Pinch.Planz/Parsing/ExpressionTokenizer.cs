@@ -16,7 +16,10 @@ namespace Pinch.Planz.Parsing
 
         public static TextParser<TextSpan> Duration { get; } =
             Numerics.Integer
-                .Then(_ => Span.WithAll(char.IsLetter));
+                .Then(_ => Span.WithAll(x => char.IsLetter(x) && x != 'T'));
+
+        public static TextParser<char> Trial { get; } =
+            Duration.Then(_ => Character.EqualTo('T'));
 
         public static TextParser<TextSpan> MonetaryValue()
         {
@@ -47,11 +50,12 @@ namespace Pinch.Planz.Parsing
         }
 
         private static Tokenizer<ExpressionToken> Tokenizer { get; } = new TokenizerBuilder<ExpressionToken>()            
-            .Match(MonetaryValue(), ExpressionToken.MonetaryAmount, requireDelimiters: true)
             .Match(Character.EqualTo('+'), ExpressionToken.Plus)
             .Match(Character.EqualTo('-'), ExpressionToken.Minus)
             .Match(Character.EqualTo('*'), ExpressionToken.Asterisk)
             .Match(Character.EqualTo('/'), ExpressionToken.Slash)            
+            .Match(MonetaryValue(), ExpressionToken.MonetaryAmount, requireDelimiters: true)            
+            .Match(Trial, ExpressionToken.Trial, requireDelimiters: false)
             .Match(Duration, ExpressionToken.Duration, requireDelimiters: true)
             .Match(Magnitude, ExpressionToken.Magnitude, requireDelimiters: true)
             .Match(Numerics.Decimal, ExpressionToken.Number, requireDelimiters: true)
