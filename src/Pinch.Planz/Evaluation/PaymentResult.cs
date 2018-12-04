@@ -17,6 +17,14 @@ namespace Pinch.Planz.Evaluation
         public bool IsRepeating { get; set; }
         public Period Period { get; set; }
 
+        public PaymentResult(decimal amount, string currencySymbol, LocalDate paymentDate)
+        {
+            Amount = amount;
+            CurrencySymbol = currencySymbol;
+            PaymentDate = paymentDate;
+            Period = Period.Zero;
+        }
+
         public override string ToString()
         {
             if (IsTrial)
